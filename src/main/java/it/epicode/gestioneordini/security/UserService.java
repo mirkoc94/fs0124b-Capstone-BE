@@ -29,12 +29,15 @@ public class UserService {
 
     public Optional<LoginResponseDTO> login(String username, String password) {
         try {
+            System.out.println("test1");
             var a = auth.authenticate(new UsernamePasswordAuthenticationToken(username, password));
 
             a.getAuthorities();
 
+
             SecurityContextHolder.getContext().setAuthentication(a);
 
+            System.out.println("test");
             var user = usersRepository.findOneByUsername(username).orElseThrow();
             var dto = LoginResponseDTO.builder()
                     .withUser(RegisteredUserDTO.builder()
