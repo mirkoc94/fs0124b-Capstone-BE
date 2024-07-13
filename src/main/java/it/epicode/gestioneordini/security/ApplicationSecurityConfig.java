@@ -53,19 +53,30 @@ public class ApplicationSecurityConfig {
                 .cors(Customizer.withDefaults()) // Utilizza la configurazione CORS
                 .authorizeHttpRequests(authorize ->
                                 authorize //CONFIGURAZIONE DELLA PROTEZIONE DEI VARI ENDPOINT
+                                        //ACCESS
                                         .requestMatchers("/users/login").permitAll()
                                         .requestMatchers("/users/registerAdmin").permitAll() // DA CANCELLARE DOPO AVER CREATO L'ADMIN
                                         .requestMatchers(HttpMethod.POST, "/users").permitAll() //ENDPOINT DI REGISTRAZIONE APERTO A TUTTI
-                                        .requestMatchers(HttpMethod.GET, "/products/{id}").permitAll()
-                                        .requestMatchers(HttpMethod.POST, "/products").permitAll()
-                                        .requestMatchers(HttpMethod.PUT, "/products{id}").permitAll()
-                                        .requestMatchers(HttpMethod.GET, "/orders/{id}").permitAll()
+                                        //USER
+                                        .requestMatchers(HttpMethod.GET, "/users/{id}").permitAll() // user/admin
+                                        .requestMatchers(HttpMethod.GET, "/users").permitAll() //admin
+                                        .requestMatchers(HttpMethod.PATCH, "/users/{id}").authenticated() //SOLO UN UTENTE AUTENTICATO PUO MODIFICARE I SUOI DATI
+                                        //PRODUCTS
+                                        .requestMatchers(HttpMethod.GET, "/api/products/{id}").permitAll() //tutti
+                                        .requestMatchers(HttpMethod.GET, "/api/products").permitAll() //tutti
+                                        .requestMatchers(HttpMethod.POST, "/api/products").permitAll() //admin
+                                        .requestMatchers(HttpMethod.PUT, "/api/products{id}").permitAll() //admin
+                                        //ORDERS
+                                        .requestMatchers(HttpMethod.GET, "/api/orders/{id}").permitAll() //user/admin con guard
+                                        .requestMatchers(HttpMethod.GET, "/api/orders").permitAll() //user/admin con guard
+                                        .requestMatchers(HttpMethod.POST, "/api/orders").permitAll() //user
+                                        //GENERAL
                                         .requestMatchers(HttpMethod.GET, "/**").authenticated() //TUTTI GLI ENDPOINTS DI TIPO GET SONO RICHIAMABILI SOLO SE L'UTENTE E' AUTENTICATO
                                         .requestMatchers(HttpMethod.POST, "/**").hasAuthority("ADMIN") //TUTTE LE POST POSSONO ESSERE FATTE SOLO DALL'ADMIN
-                                        .requestMatchers(HttpMethod.PATCH, "/users/{id}").authenticated() //SOLO UN UTENTE AUTENTICATO PUO MODIFICARE I SUOI DATI
+                                        //ADMIN
                                         .requestMatchers(HttpMethod.PUT, "/**").hasAuthority("ADMIN") //TUTTE LE PUT POSSONO ESSERE FATTE SOLO DALL'ADMIN
                                         .requestMatchers(HttpMethod.DELETE, "/**").hasAuthority("ADMIN") //TUTTE LE DELETE POSSONO ESSERE FATTE SOLO DALL'ADMIN
-                        //.requestMatchers("/**").authenticated() //TUTTO CIO CHE PUO ESSERE SFUGGITO RICHIEDE L'AUTENTICAZIONE (SERVE A GESTIRE EVENTUALI DIMENTICANZE)
+                                        //.requestMatchers("/**").authenticated() //TUTTO CIO CHE PUO ESSERE SFUGGITO RICHIEDE L'AUTENTICAZIONE (SERVE A GESTIRE EVENTUALI DIMENTICANZE)
                 )
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
