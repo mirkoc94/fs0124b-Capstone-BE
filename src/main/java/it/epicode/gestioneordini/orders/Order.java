@@ -2,7 +2,7 @@ package it.epicode.gestioneordini.orders;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.epicode.gestioneordini.products.Product;
-import it.epicode.gestioneordini.customers.Customer;
+import it.epicode.gestioneordini.security.User;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.ToString;
@@ -17,10 +17,9 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    @ManyToOne
-    @ToString.Exclude
-    @JsonIgnoreProperties({"orderList"})
-    private Customer customer;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User idUser;
     @OneToMany
     private List <Product> productList;
     private float total;

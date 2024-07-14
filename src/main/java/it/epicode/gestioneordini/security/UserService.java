@@ -1,7 +1,10 @@
 package it.epicode.gestioneordini.security;
 
 
+import it.epicode.gestioneordini.customers.Customer;
+import it.epicode.gestioneordini.customers.Response;
 import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -26,6 +29,26 @@ public class UserService {
     private final RolesRepository rolesRepository;
     private final AuthenticationManager auth;
     private final JwtUtils jwt;
+
+    // GET ALL
+    public List<User> findAll(){
+        return usersRepository.findAll();
+    }
+
+    // GET
+    public Response findById(Long id){
+        if(!usersRepository.existsById(id)){
+            throw new EntityNotFoundException("User non trovato");
+        }
+        User entity = usersRepository.findById(id).get();
+        Response response = new Response();
+        BeanUtils.copyProperties(entity, response);
+        return response;
+    }
+
+    public Optional<User> findByEmail(String email) {
+        return usersRepository.findByEmail(email);
+    }
 
     public Optional<LoginResponseDTO> login(String username, String password) {
         try {

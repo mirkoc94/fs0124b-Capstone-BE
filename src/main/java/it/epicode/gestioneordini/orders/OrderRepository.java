@@ -6,5 +6,9 @@ import java.util.List;
 
 public interface OrderRepository extends JpaRepository<Order,Long> {
     public List<Order> findByCustomerEmail(String email);
+    List<Order> findByUserId(Long idUser);
+
 }
+
+
 //guardare pure il service

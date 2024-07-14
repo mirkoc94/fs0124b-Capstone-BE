@@ -1,5 +1,7 @@
 package it.epicode.gestioneordini.security;
 
+import it.epicode.gestioneordini.customers.Customer;
+import it.epicode.gestioneordini.customers.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -7,12 +9,24 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/users")
 public class UserController {
 
     @Autowired
     private UserService user;
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Response> findById(@PathVariable Long id){
+        return ResponseEntity.ok(user.findById(id));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<User>> findAll(){
+        return ResponseEntity.ok(user.findAll());
+    }
 
     @PostMapping
     public ResponseEntity<RegisteredUserDTO> register(@RequestBody @Validated RegisterUserModel model, BindingResult validator){

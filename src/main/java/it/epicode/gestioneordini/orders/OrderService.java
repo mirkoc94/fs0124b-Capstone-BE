@@ -28,8 +28,8 @@ public class OrderService {
         return response;
     }
 
-    public List<Order> findByCustomerEmail(String email){
-        return repository.findByCustomerEmail(email);
+    public List<Order> findByUserId(Long idUser) {
+        return repository.findByUserId(idUser);
     }
 
     // POST
