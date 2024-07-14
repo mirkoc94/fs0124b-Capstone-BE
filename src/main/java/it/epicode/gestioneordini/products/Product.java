@@ -14,5 +14,6 @@ public class Product {
     private String name;
     private float price;
     private String image;
+    private Long quantity;
     private Long partialTotal;
 }
