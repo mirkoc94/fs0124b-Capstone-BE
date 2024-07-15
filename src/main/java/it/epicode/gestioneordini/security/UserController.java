@@ -1,6 +1,5 @@
 package it.epicode.gestioneordini.security;
 
-import it.epicode.gestioneordini.customers.Customer;
 import it.epicode.gestioneordini.customers.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -2,7 +2,6 @@ package it.epicode.gestioneordini.security;
 
 import it.epicode.gestioneordini.orders.Order;
 import jakarta.persistence.*;
-import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -27,7 +26,8 @@ public class User{
     private String email;
     @Column(length = 125, nullable = false)
     private String password;
-    @OneToMany(mappedBy = "idUser", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
     private List<Order> orderList;
     @ManyToMany(fetch = FetchType.EAGER)
     private final List<Roles> roles = new ArrayList<>();

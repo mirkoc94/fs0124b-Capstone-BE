@@ -18,8 +18,10 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
+    @ToString.Exclude
+    @JsonIgnoreProperties({"orderList","id"})
     @JoinColumn(name = "user_id", nullable = false)
-    private User idUser;
+    private User user;
     @OneToMany
     private List <Product> productList;
     private float total;

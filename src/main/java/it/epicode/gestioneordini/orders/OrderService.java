@@ -1,6 +1,8 @@
 package it.epicode.gestioneordini.orders;
 
+import it.epicode.gestioneordini.security.User;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,7 @@ public class OrderService {
     }
 
     // GET
+    @Transactional
     public Response findById(Long id){
         if(!repository.existsById(id)){
             throw new EntityNotFoundException("Ordine non trovato");
@@ -28,8 +31,8 @@ public class OrderService {
         return response;
     }
 
-    public List<Order> findByUserId(Long idUser) {
-        return repository.findByUserId(idUser);
+    public List<Order> findByUserId(Long userId) {
+        return repository.findByUserId(userId);
     }
 
     // POST

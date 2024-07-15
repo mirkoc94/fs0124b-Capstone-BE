@@ -22,15 +22,6 @@ public class OrderController {
         return ResponseEntity.ok(service.findAll());
     }
 
-    @GetMapping
-    public ResponseEntity<List<Order>> findByUserId(@PathVariable Long idUser) {
-        List<Order> orders = service.findByUserId(idUser);
-        if (orders.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(orders);
-    }
-
     @PostMapping
     public ResponseEntity<Response> create(@RequestBody Request request){
         return ResponseEntity.ok(service.create(request));
