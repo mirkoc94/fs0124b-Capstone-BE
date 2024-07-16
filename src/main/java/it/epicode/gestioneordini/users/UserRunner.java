@@ -1,5 +1,6 @@
-package it.epicode.gestioneordini.security;
+package it.epicode.gestioneordini.users;
 
+import it.epicode.gestioneordini.security.RegisterUserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -17,11 +18,11 @@ public class UserRunner implements ApplicationRunner {
     private UserService userService;
 
     @Autowired
-    private UserRespository userRespository;
+    private UserRepository userRepository;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        if (userRespository.count() == 0) {
+        if (userRepository.count() == 0) {
             List<RegisterUserDTO> users = Arrays.asList(
                     RegisterUserDTO.builder()
                             .withFirstName("Mario")

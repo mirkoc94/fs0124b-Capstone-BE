@@ -3,7 +3,6 @@ package it.epicode.gestioneordini.products;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import it.epicode.gestioneordini.security.FileSizeExceededException;
-import it.epicode.gestioneordini.security.User;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

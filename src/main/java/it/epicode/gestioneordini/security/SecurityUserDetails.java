@@ -1,5 +1,6 @@
 package it.epicode.gestioneordini.security;
 
+import it.epicode.gestioneordini.users.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

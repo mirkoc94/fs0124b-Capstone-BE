@@ -1,6 +1,6 @@
 package it.epicode.gestioneordini.orders;
 
-import it.epicode.gestioneordini.security.User;
+import it.epicode.gestioneordini.users.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.BeanUtils;
@@ -13,6 +13,9 @@ import java.util.List;
 public class OrderService {
     @Autowired
     OrderRepository repository;
+
+    @Autowired
+    private UserService userService;
 
     // GET ALL
     public List<Order> findAll(){
@@ -31,7 +34,7 @@ public class OrderService {
         return response;
     }
 
-    public List<Order> findByUserId(Long userId) {
+    public List<Order> getUserOrders(Long userId) {
         return repository.findByUserId(userId);
     }
 

@@ -1,6 +1,5 @@
 package it.epicode.gestioneordini.products;
 
-import it.epicode.gestioneordini.security.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

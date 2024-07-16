@@ -1,6 +1,6 @@
-package it.epicode.gestioneordini.security;
+package it.epicode.gestioneordini.users;
 
-import it.epicode.gestioneordini.customers.Response;
+import it.epicode.gestioneordini.security.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +17,9 @@ public class UserController {
     @Autowired
     private UserService user;
 
+    @Autowired
+    private UserRepository usersRepository;
+
     @GetMapping("/{id}")
     public ResponseEntity<Response> findById(@PathVariable Long id){
         return ResponseEntity.ok(user.findById(id));
@@ -26,6 +29,25 @@ public class UserController {
     public ResponseEntity<List<User>> findAll(){
         return ResponseEntity.ok(user.findAll());
     }
+
+    //@PostMapping
+    //public ResponseEntity<Response> create(Request request){
+    //    return ResponseEntity.ok(user.create(request));
+    //}
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Response> modify(@PathVariable Long id, @RequestBody Request request){
+        return ResponseEntity.ok(user.modify(id, request));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> delete(@PathVariable Long id){
+        return ResponseEntity.ok(user.delete(id));
+    }
+
+
+
+    //ACCESS
 
     @PostMapping
     public ResponseEntity<RegisteredUserDTO> register(@RequestBody @Validated RegisterUserModel model, BindingResult validator){

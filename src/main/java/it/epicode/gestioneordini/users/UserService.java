@@ -1,10 +1,9 @@
-package it.epicode.gestioneordini.security;
+package it.epicode.gestioneordini.users;
 
-
-import it.epicode.gestioneordini.customers.Customer;
-import it.epicode.gestioneordini.customers.Response;
+import it.epicode.gestioneordini.security.*;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -25,7 +24,7 @@ import java.util.Optional;
 public class UserService {
 
     private final PasswordEncoder encoder;
-    private final UserRespository usersRepository;
+    private final UserRepository usersRepository;
     private final RolesRepository rolesRepository;
     private final AuthenticationManager auth;
     private final JwtUtils jwt;
@@ -46,9 +45,42 @@ public class UserService {
         return response;
     }
 
-    public Optional<User> findByEmail(String email) {
-        return usersRepository.findByEmail(email);
+    // POST
+    @Transactional
+    public Response create(Request request){
+        User entity = new User();
+        BeanUtils.copyProperties(request, entity);
+        Response response = new Response();
+        BeanUtils.copyProperties(entity, response);
+        usersRepository.save(entity);
+        return response;
     }
+
+    // PUT
+    public Response modify(Long id, Request request){
+        if(!usersRepository.existsById(id)){
+            throw new EntityNotFoundException("User non trovato");
+        }
+        User entity = usersRepository.findById(id).get();
+        BeanUtils.copyProperties(request, entity);
+        usersRepository.save(entity);
+        Response response = new Response();
+        BeanUtils.copyProperties(entity, response);
+        return response;
+    }
+
+    //DELETE
+    public String delete(Long id){
+        if(!usersRepository.existsById(id)){
+            throw  new EntityNotFoundException("User non trovato");
+        }
+        usersRepository.deleteById(id);
+        return "User eliminato";
+    }
+
+
+
+    //ACCESS
 
     public Optional<LoginResponseDTO> login(String username, String password) {
         try {

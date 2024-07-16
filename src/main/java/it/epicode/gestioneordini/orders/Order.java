@@ -2,7 +2,7 @@ package it.epicode.gestioneordini.orders;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.epicode.gestioneordini.products.Product;
-import it.epicode.gestioneordini.security.User;
+import it.epicode.gestioneordini.users.User;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.ToString;
@@ -17,9 +17,9 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @ToString.Exclude
-    @JsonIgnoreProperties({"orderList","id"})
+    @JsonIgnoreProperties({"orderList","hibernateLazyInitializer", "handler"})
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
     @OneToMany

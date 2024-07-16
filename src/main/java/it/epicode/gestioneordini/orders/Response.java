@@ -1,7 +1,7 @@
 package it.epicode.gestioneordini.orders;
 
 import it.epicode.gestioneordini.products.Product;
-import it.epicode.gestioneordini.security.User;
+import it.epicode.gestioneordini.users.User;
 import lombok.Data;
 
 import java.time.LocalDate;
