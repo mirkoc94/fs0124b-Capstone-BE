@@ -1,5 +1,7 @@
 package it.epicode.gestioneordini.users;
 
+import it.epicode.gestioneordini.orders.Order;
+import it.epicode.gestioneordini.orders.OrderService;
 import it.epicode.gestioneordini.security.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,7 +20,7 @@ public class UserController {
     private UserService user;
 
     @Autowired
-    private UserRepository usersRepository;
+    private OrderService orderService;
 
     @GetMapping("/{id}")
     public ResponseEntity<Response> findById(@PathVariable Long id){
@@ -28,6 +30,18 @@ public class UserController {
     @GetMapping
     public ResponseEntity<List<User>> findAll(){
         return ResponseEntity.ok(user.findAll());
+    }
+
+    @GetMapping("/{userId}/orders")
+    public ResponseEntity<List<Order>> getAllOrdersByUserId(@PathVariable Long userId) {
+        List<Order> orders = orderService.getOrdersByUserId(userId);
+        return ResponseEntity.ok(orders);
+    }
+
+    @GetMapping("/{userId}/orders/{orderId}")
+    public ResponseEntity<Order> getOrderByUserIdAndOrderId(@PathVariable Long userId, @PathVariable Long orderId) {
+        Order order = orderService.getOrderByUserIdAndOrderId(userId, orderId);
+        return ResponseEntity.ok(order);
     }
 
     //@PostMapping

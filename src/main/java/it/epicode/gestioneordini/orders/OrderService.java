@@ -11,11 +11,9 @@ import java.util.List;
 
 @Service
 public class OrderService {
-    @Autowired
-    OrderRepository repository;
 
     @Autowired
-    private UserService userService;
+    OrderRepository repository;
 
     // GET ALL
     public List<Order> findAll(){
@@ -34,8 +32,17 @@ public class OrderService {
         return response;
     }
 
-    public List<Order> getUserOrders(Long userId) {
+    //public List<Order> getUserOrders(Long userId) {
+    //    return repository.findByUserId(userId);
+    //}
+
+    public List<Order> getOrdersByUserId(Long userId) {
         return repository.findByUserId(userId);
+    }
+
+    public Order getOrderByUserIdAndOrderId(Long userId, Long orderId) {
+        return repository.findByUserIdAndOrderId(userId, orderId)
+                .orElseThrow(() -> new EntityNotFoundException("Ordine non trovato"));
     }
 
     // POST

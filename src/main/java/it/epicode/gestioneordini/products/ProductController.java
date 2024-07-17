@@ -39,6 +39,29 @@ public class ProductController {
         return ResponseEntity.ok(service.create(request));
     }
 
+    //@PostMapping
+    //public ResponseEntity<Response> createProduct(@RequestParam("brand") String brand,
+    //                                              @RequestParam("name") String name,
+    //                                              @RequestParam("price") float price,
+    //                                              @RequestParam("image") MultipartFile image,
+    //                                              @RequestParam("quantity") Long quantity,
+    //                                              @RequestParam("partialTotal") Long partialTotal) {
+    //    try {
+    //        String imageUrl = service.uploadImage(image);
+//
+    //        Request request = new Request();
+    //        request.setBrand(brand);
+    //        request.setName(name);
+    //        request.setPrice(price);
+    //        request.setImage(imageUrl);
+//
+    //        Response response = service.create(request);
+    //        return ResponseEntity.ok(response);
+    //    } catch (IOException e) {
+    //        return ResponseEntity.status(500).body(null);
+    //    }
+    //}
+
     @PutMapping("/{id}")
     public ResponseEntity<Response> modify(@PathVariable Long id, @RequestBody Request request){
         return ResponseEntity.ok(service.modify(id, request));
@@ -49,7 +72,9 @@ public class ProductController {
         return ResponseEntity.ok(service.delete(id));
     }
 
-    @PostMapping("/{name}/image")
+    //CLOUDINARY
+
+    @PostMapping("/upload")
     public ResponseEntity<String> uploadImage(@PathVariable String name, @RequestParam("file") MultipartFile file) {
         try {
             var uploadResult = cloudinary.uploader().upload(file.getBytes(),
@@ -71,7 +96,7 @@ public class ProductController {
         }
     }
 
-    @GetMapping("/{name}/image")
+    @GetMapping("/uploa")
     public ResponseEntity<String> getProductImage(@PathVariable String name) {
         Optional<Product> product = productsRepository.findOneByName(name);
         if (product.isPresent() && product.get().getImage() != null) {
@@ -80,4 +105,6 @@ public class ProductController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Image not found");
         }
     }
+
+
 }

@@ -39,21 +39,21 @@ public class OrderController {
     //    return ResponseEntity.ok(orders);
     //}
 
-    @GetMapping("/users/{userId}/orders")
-    public ResponseEntity<List<Order>> getUserOrders(@PathVariable Long userId) {
-        // Recupera l'utente corrente dall'oggetto di sicurezza
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentPrincipalName = authentication.getName();
-
-        // Verifica se l'utente corrente ha accesso agli ordini richiesti
-        if (!currentPrincipalName.equals(userId.toString())) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
-
-        // Recupera gli ordini dell'utente specificato
-        List<Order> orders = service.getUserOrders(userId);
-        return ResponseEntity.ok(orders);
-    }
+    //@GetMapping("/users/{userId}/orders")
+    //public ResponseEntity<List<Order>> getUserOrders(@PathVariable Long userId) {
+    //    // Recupera l'utente corrente dall'oggetto di sicurezza
+    //    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    //    String currentPrincipalName = authentication.getName();
+//
+    //    // Verifica se l'utente corrente ha accesso agli ordini richiesti
+    //    if (!currentPrincipalName.equals(userId.toString())) {
+    //        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    //    }
+//
+    //    // Recupera gli ordini dell'utente specificato
+    //    List<Order> orders = service.getUserOrders(userId);
+    //    return ResponseEntity.ok(orders);
+    //}
 
     @PostMapping
     public ResponseEntity<Response> create(@RequestBody Request request){

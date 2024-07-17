@@ -84,7 +84,7 @@ public class ProductService {
         return "Prodotto eliminato";
     }
 
-    //Cloudinary
+    //CLOUDINARY
 
     @Transactional
     public String uploadImage(Long id, MultipartFile image) throws IOException {
@@ -111,9 +111,6 @@ public class ProductService {
         return url;
     }
 
-
-// DELETE delete cloudinary file
-
     @Transactional
     public String deleteImage(Long id) throws IOException {
         Optional<Product> optionalProduct = repository.findById(id);
@@ -130,8 +127,6 @@ public class ProductService {
         }
     }
 
-
-    // PUT update cloudinary file
     @Transactional
     public String updateImage(Long id, MultipartFile updatedImage) throws IOException {
         deleteImage(id);
